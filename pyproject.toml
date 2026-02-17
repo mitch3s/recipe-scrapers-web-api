@@ -1,0 +1,11 @@
+[project]
+name = "recipe-scrapers-web-api"
+version = "0.1.0"
+description = "Web API wrapper for recipe-scrapers"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.128.0",
+    "recipe-scrapers>=15.11.0",
+    "uvicorn>=0.40.0",
+]
