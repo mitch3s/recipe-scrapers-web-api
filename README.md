@@ -11,13 +11,13 @@ uv sync
 ## Running the API
 
 ```bash
-python main.py
+uv run python main.py
 ```
 
 Or with uvicorn directly:
 
 ```bash
-uvicorn main:app --reload
+uv run uvicorn main:app --reload
 ```
 
 The API will be available at `http://localhost:8000`
@@ -50,40 +50,50 @@ The response looks like this:
 ```json
 {
   "author": "John Doe",
-  "canonical_url": "https://www.example.com/recipe/123",
+  "canonicalUrl": "https://www.example.com/recipe/123",
   "category": "Dessert",
-  "cook_time": 30,
+  "cookTime": 30,
+  "cookingMethod": null,
   "cuisine": "French",
   "description": "A delicious chocolate cake recipe.",
+  "dietaryRestrictions": ["Vegetarian"],
+  "equipment": ["Oven", "Mixing Bowl"],
   "host": "www.example.com",
   "image": "https://www.example.com/images/chocolate-cake.jpg",
-  "ingredient_groups": [
+  "ingredientGroups": [
     {
-      "group_name": "Cake",
+      "purpose": "Cake",
       "ingredients": ["2 cups flour", "1 cup sugar"]
     }
   ],
   "ingredients": ["2 cups flour", "1 cup sugar", "2 eggs"],
   "instructions": "Mix ingredients and bake.",
-  "instructions_list": ["Mix ingredients.", "Bake at 350F for 30 minutes."],
+  "instructionsList": ["Mix ingredients.", "Bake at 350F for 30 minutes."],
+  "keywords": ["chocolate", "cake", "dessert"],
   "language": "en",
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://www.example.com/recipe/123"
+    }
+  ],
   "nutrients": {
     "calories": "250 kcal",
     "protein": "5g"
   },
-  "prep_time": 15,
+  "prepTime": 15,
   "ratings": 4.5,
-  "ratings_count": 120,
-  "site_name": "Example Recipes",
+  "ratingsCount": 120,
+  "siteName": "Example Recipes",
   "title": "Chocolate Cake",
-  "total_time": 45,
+  "totalTime": 45,
   "yields": "1 cake"
 }
 ```
 
 # Docker
 
-```
+```sh
 docker build -t recipe-scrapers-api .
 docker run -p 8000:8000 recipe-scrapers-api
 ```
