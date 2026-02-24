@@ -43,15 +43,27 @@ def scrape_from_html(request: HtmlRequest) -> RecipeResponse:
     ```
     """
     try:
+        if "https://www.cloudflare.com/privacypolicy/" in request.html:
+            raise HTTPException(
+                status_code=403,
+                detail="Cloudflare protection detected. Cannot process HTML content.",
+            )
 
-        # write to file
-        with open("test.html", "w", encoding="utf-8") as file:
-            file.write(request.html)
+        scraper = scrape_html(
+            html=request.html, org_url=str(request.url), supported_only=False
+        )
 
-        scraper = scrape_html(html=request.html, org_url=str(request.url))
+        if scraper.to_json().get("author") is None:  # type: ignore
+            raise HTTPException(
+                status_code=422,
+                detail="Parsing recipe data failed",
+            )
+
         return RecipeResponse.from_scraper(scraper)
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error scraping HTML: {str(e)}")
+        raise HTTPException(status_code=422, detail=f"Error scraping HTML: {str(e)}")
 
 
 @app.get("/demo-response", response_model=RecipeResponse)

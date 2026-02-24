@@ -1,0 +1,8 @@
+{
+  "name": "recipe-scrapers-web-api",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "generate:schema:ts": "npx openapi-typescript http://localhost:8000/openapi.json -o recipe-scrapers-web-api.d.ts"
+  }
+}
